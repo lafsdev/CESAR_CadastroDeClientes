@@ -14,7 +14,7 @@
 #### Para colocarmos em prática todos os conceitos estudados até agora, vamos desenvolver um
 #### projeto que atenda os seguintes tópicos:
 
-```http
+```js
 1) Montar um time de desenvolvimento com no máximo 4 integrantes.
 2) Desenvolver todo o projeto usando o repositório de armazenamento do GitHub.
 3) Projeto:
