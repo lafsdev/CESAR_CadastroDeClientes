@@ -35,9 +35,9 @@
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.BackgroundColor = ConsoleColor.White;
-            Console.WriteLine("===================================================");
+            Console.WriteLine("==================================================");
             Console.WriteLine("= " + titulo);
-            Console.WriteLine("===================================================");
+            Console.WriteLine("==================================================");
             Console.WriteLine();
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.Yellow;
@@ -80,14 +80,16 @@
                     ConsultarTodosClientes();
                     break;
                 case 5:
-                //ConsultarTodosClientesAtivos();
+                    // ConsultarTodosClientesAtivos();
+                    break;
                 case 6:
                 //InformarRendaMedia();
                 case 7:
                     InformarAniversarios();
                     break;
                 case 8:
-                //ConsultarClienteCodigo()
+                    ConsultarClienteCodigo();
+                    break;
                 case 9:
                     //ConsultarClienteNome()
                     break;
@@ -138,7 +140,6 @@
 
 
         }
-
         static void ConsultarTodosClientes()
         {
             Cabecalho("Consultar todos os clientes");
@@ -150,6 +151,29 @@
                 Console.WriteLine("{0}\t\t{1}", linha.Key, vetor[1]);
             }
             Console.ReadKey();
+        }
+        static int ConsultarClienteCodigo()
+        {
+            int codigoCliente;
+
+            Cabecalho("Consultar cliente por código");
+            Console.WriteLine("Digite o código a ser consultado:");
+            Console.WriteLine("================================");
+            codigoCliente = Convert.ToInt32(Console.ReadLine());
+
+            foreach (KeyValuePair<int, string> linha in _cadastro)
+            {
+                if (codigoCliente == linha.Key)
+                {
+                    Console.WriteLine($"Cliente com o código {linha.Key} encontrado");
+                    Console.WriteLine($"{linha.Key} - {linha.Value}");
+                    Console.ReadKey();
+                    return linha.Key;
+                }
+            }
+            Console.WriteLine($"Cliente com o código {codigoCliente} não encontrado.");            
+            Console.ReadKey();
+            return 0;
         }
 
         static void GravarDadosArquivo(string linhaCadastro)
