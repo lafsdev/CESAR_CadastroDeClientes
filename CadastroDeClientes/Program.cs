@@ -83,7 +83,8 @@
                     ConsultarTodosClientesAtivos();
                     break;
                 case 6:
-                //InformarRendaMedia();
+                InformarRendaMedia();
+                    break;
                 case 7:
                     InformarAniversarios();
                     break;
@@ -135,6 +136,24 @@
 
         }
 
+        static float InformarRendaMedia()
+        {
+            int rendaCount = 0;
+            float rendaMedia = 0,somaRenda=0;
+            foreach(KeyValuePair<int,string> clientes in _cadastro)
+            {
+                string[] vetor = clientes.Value.Split(";");
+                somaRenda += float.Parse(vetor[5]);
+                rendaCount++;
+            }
+            rendaMedia = somaRenda / rendaCount;
+            Cabecalho("Media da Renda Anual dos Clientes");
+            Console.WriteLine($"A media da renda atual é de R${rendaMedia}");
+            Console.ReadKey();
+            return 0;
+        }
+        
+        
         static void ExcluirCliente()
         {
 
@@ -298,8 +317,22 @@
         {
             string hoje = DateTime.Now.ToShortDateString();
             Cabecalho(" Aniversariantes do dia de hoje:" + hoje);
-
+            Console.WriteLine("================================");
+            Console.WriteLine("Codigo\t\tNome");
+            Console.WriteLine("================================");
+            foreach (KeyValuePair<int, string> linha in _cadastro)
+            {
+                string[] vetor = linha.Value.Split(";");
+                
+                if (hoje.Remove(5) == vetor[4].Remove(5))
+                {
+                    Console.WriteLine(vetor[0] + "   \t\t" + vetor[1]);
+                }
+            }
             Console.ReadKey();
+
+        
+
         }
 
         static int ObterNovoCodigoCliente()
