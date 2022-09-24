@@ -80,7 +80,7 @@
                     ConsultarTodosClientes();
                     break;
                 case 5:
-                    // ConsultarTodosClientesAtivos();
+                    ConsultarTodosClientesAtivos();
                     break;
                 case 6:
                 //InformarRendaMedia();
@@ -131,7 +131,7 @@
 
         static void AlterarCliente()
         {
-            
+
 
         }
 
@@ -152,7 +152,7 @@
                 {
                     if (int.Parse(campos[0]) == 0)
                     {
-                    //Só não está excluindo se for o ultimo cliente porque nao sei o que colocar aqui para criar o arquivo do 0.
+                        //Só não está excluindo se for o ultimo cliente porque nao sei o que colocar aqui para criar o arquivo do 0.
                     }
                 }
                 else
@@ -160,7 +160,7 @@
                     //Checa se é a primeira linha e caso seja, sobescreve totalmente o arquivo, para seguir com a escrita normal a partir do proximo passo.
                     if (primeiraLinha == 0)
                     {
-                        using  (StreamWriter outputFile = new StreamWriter(_fileName, false))
+                        using (StreamWriter outputFile = new StreamWriter(_fileName, false))
                         {
                             outputFile.WriteLine(line);
                         }
@@ -171,8 +171,8 @@
                     {
                         GravarDadosArquivo(line);
                     }
-                    
-                    
+
+
                 }
             }
             //Re-lê os clientes cadastrados para ficar com a base de dados atualizada após exclusão
@@ -207,6 +207,7 @@
                     Console.WriteLine($"Cliente com o código {linha.Key} encontrado");
                     string[] vetor = linha.Value.Split(";");
                     Console.Clear();
+                    Cabecalho("Cliente encontrado");
                     Console.WriteLine("================================");
                     Console.WriteLine("{0}\t\t{1}", linha.Key, vetor[1]);
                     Console.WriteLine("================================");
@@ -214,14 +215,14 @@
                     return linha.Key;
                 }
             }
-            Console.WriteLine($"Cliente com o código {codigoCliente} não encontrado.");            
+            Console.WriteLine($"Cliente com o código {codigoCliente} não encontrado.");
             Console.ReadKey();
             return 0;
         }
 
         static void ConsultarClienteNome()
         {
-            string  nomeCliente;
+            string nomeCliente;
 
             Cabecalho("Consultar cliente por Nome");
             Console.WriteLine("Digite o nome a ser consultado:");
@@ -231,24 +232,47 @@
             foreach (KeyValuePair<int, string> linha in _cadastro)
             {
                 string[] vetor = linha.Value.Split(";");
-                
+
                 if (nomeCliente == vetor[1])
                 {
                     Console.WriteLine($"Cliente com o nome {vetor[1]} encontrado");
-                    
+
                     Console.Clear();
+                    Cabecalho("Cliente encontrado");
                     Console.WriteLine("================================");
                     Console.WriteLine("{0}\t\t{1}", linha.Key, vetor[1]);
                     Console.WriteLine("================================");
                     Console.ReadKey();
-                    
-                } else
+
+                }
+                else
                 {
                     Console.WriteLine("Cliente com não encontrado.");
                 }
-            }            
+            }
             Console.ReadKey();
-            
+
+        }
+
+        static void ConsultarTodosClientesAtivos()
+        {
+            Dictionary<int, string> clientesAtivos = new Dictionary<int, string>();
+            Cabecalho("Clientes ativos");
+            Console.WriteLine("================================");
+            Console.WriteLine("Codigo\t\tNome");
+            Console.WriteLine("================================");
+
+            foreach (KeyValuePair<int, string> linha in _cadastro)
+            {
+                string[] vetor = linha.Value.Split(";");
+
+                if (1 == int.Parse(vetor[6]))
+                {
+                    Console.WriteLine(vetor[0] + "   \t\t" + vetor[1]);
+                }
+            }
+            Console.ReadKey();
+
         }
 
         static void GravarDadosArquivo(string linhaCadastro)
