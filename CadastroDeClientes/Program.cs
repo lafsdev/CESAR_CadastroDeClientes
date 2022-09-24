@@ -91,7 +91,7 @@
                     ConsultarClienteCodigo();
                     break;
                 case 9:
-                    //ConsultarClienteNome()
+                    ConsultarClienteNome();
                     break;
                 case 10:
                     break;
@@ -178,6 +178,38 @@
             Console.WriteLine($"Cliente com o código {codigoCliente} não encontrado.");            
             Console.ReadKey();
             return 0;
+        }
+
+        static void ConsultarClienteNome()
+        {
+            string  nomeCliente;
+
+            Cabecalho("Consultar cliente por Nome");
+            Console.WriteLine("Digite o nome a ser consultado:");
+            Console.WriteLine("================================");
+            nomeCliente = Console.ReadLine();
+
+            foreach (KeyValuePair<int, string> linha in _cadastro)
+            {
+                string[] vetor = linha.Value.Split(";");
+                
+                if (nomeCliente == vetor[1])
+                {
+                    Console.WriteLine($"Cliente com o nome {vetor[1]} encontrado");
+                    
+                    Console.Clear();
+                    Console.WriteLine("================================");
+                    Console.WriteLine("{0}\t\t{1}", linha.Key, vetor[1]);
+                    Console.WriteLine("================================");
+                    Console.ReadKey();
+                    
+                } else
+                {
+                    Console.WriteLine("Cliente com não encontrado.");
+                }
+            }            
+            Console.ReadKey();
+            
         }
 
         static void GravarDadosArquivo(string linhaCadastro)
