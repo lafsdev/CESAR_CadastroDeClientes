@@ -131,13 +131,52 @@
 
         static void AlterarCliente()
         {
-            //TODO: Ugo vai fazer essa função
+            
 
         }
 
         static void ExcluirCliente()
         {
 
+            Cabecalho("Excluir cliente");
+            Console.Write("Insira o codigo do cliente que você deseja excluir:");
+            //Pega código do cliente a ser excluido
+            int codigoExcluir = int.Parse(Console.ReadLine());
+            //Auxiliar para sobescrever o arquivo
+            int primeiraLinha = 0;
+            foreach (string line in System.IO.File.ReadAllLines(_fileName))
+            {
+                string[] campos = line.Split(";");
+                //Checa se o cliente atual é o cliente a ser excluído
+                if (codigoExcluir == int.Parse(campos[0]))
+                {
+                    if (int.Parse(campos[0]) == 0)
+                    {
+                    //Só não está excluindo se for o ultimo cliente porque nao sei o que colocar aqui para criar o arquivo do 0.
+                    }
+                }
+                else
+                {
+                    //Checa se é a primeira linha e caso seja, sobescreve totalmente o arquivo, para seguir com a escrita normal a partir do proximo passo.
+                    if (primeiraLinha == 0)
+                    {
+                        using  (StreamWriter outputFile = new StreamWriter(_fileName, false))
+                        {
+                            outputFile.WriteLine(line);
+                        }
+                        ++primeiraLinha;
+                    }
+                    else
+                    //gravação das linhas que não sejam a primeira (sem sobescrever)
+                    {
+                        GravarDadosArquivo(line);
+                    }
+                    
+                    
+                }
+            }
+            //Re-lê os clientes cadastrados para ficar com a base de dados atualizada após exclusão
+            LerArquivo();
 
         }
         static void ConsultarTodosClientes()
@@ -222,6 +261,7 @@
 
         static void LerArquivo()
         {
+            _cadastro.Clear();
             foreach (string line in System.IO.File.ReadLines(_fileName))
             {
                 string[] campos = line.Split(";");
