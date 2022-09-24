@@ -166,7 +166,11 @@
                 if (codigoCliente == linha.Key)
                 {
                     Console.WriteLine($"Cliente com o código {linha.Key} encontrado");
-                    Console.WriteLine($"{linha.Key} - {linha.Value}");
+                    string[] vetor = linha.Value.Split(";");
+                    Console.Clear();
+                    Console.WriteLine("================================");
+                    Console.WriteLine("{0}\t\t{1}", linha.Key, vetor[1]);
+                    Console.WriteLine("================================");
                     Console.ReadKey();
                     return linha.Key;
                 }
