@@ -208,46 +208,33 @@
 
         static void ExcluirCliente()
         {
-
             Cabecalho("Excluir cliente");
             Console.Write("Insira o codigo do cliente que você deseja excluir:");
-            //Pega código do cliente a ser excluido
-            int codigoExcluir = int.Parse(Console.ReadLine());
-            //Auxiliar para sobescrever o arquivo
-            int primeiraLinha = 0;
-            foreach (string line in System.IO.File.ReadAllLines(_fileName))
+            int codigo = int.Parse(Console.ReadLine());
+            bool excluiu = false;
+
+            // Busca e remove registro do dicionário
+            foreach (KeyValuePair<int, string> linha in _cadastro)
             {
-                string[] campos = line.Split(";");
-                //Checa se o cliente atual é o cliente a ser excluído
-                if (codigoExcluir == int.Parse(campos[0]))
+                if (linha.Key == codigo)
                 {
-                    if (int.Parse(campos[0]) == 0)
-                    {
-                        //Só não está excluindo se for o ultimo cliente porque nao sei o que colocar aqui para criar o arquivo do 0.
-                    }
-                }
-                else
-                {
-                    //Checa se é a primeira linha e caso seja, sobescreve totalmente o arquivo, para seguir com a escrita normal a partir do proximo passo.
-                    if (primeiraLinha == 0)
-                    {
-                        using (StreamWriter outputFile = new StreamWriter(_fileName, false))
-                        {
-                            outputFile.WriteLine(line);
-                        }
-                        ++primeiraLinha;
-                    }
-                    else
-                    //gravação das linhas que não sejam a primeira (sem sobescrever)
-                    {
-                        GravarDadosArquivo(line);
-                    }
-
-
+                    _cadastro.Remove(codigo);
+                    excluiu = true;
+                    break;
                 }
             }
-            //Re-lê os clientes cadastrados para ficar com a base de dados atualizada após exclusão
-            LerArquivo();
+
+            if (excluiu)
+            {
+                // Recria o arquivo com o dicionario atualizado
+                File.Delete(_fileName);
+                RecarregarArquivo();
+            }
+            else
+            {
+                Console.WriteLine("Não existe cliente com este código.");
+                Console.ReadKey();
+            }
 
         }
         static void ConsultarTodosClientes()
@@ -291,14 +278,15 @@
             return 0;
         }
 
-        static void ConsultarClienteNome()
+        static string ConsultarClienteNome()
         {
-            string nomeCliente;
+            string nomeCliente, msg;
 
             Cabecalho("Consultar cliente por Nome");
             Console.WriteLine("Digite o nome a ser consultado:");
             Console.WriteLine("================================");
             nomeCliente = Console.ReadLine();
+            msg = "Cliente não encontrado.";
 
             foreach (KeyValuePair<int, string> linha in _cadastro)
             {
@@ -314,15 +302,13 @@
                     Console.WriteLine("{0}\t\t{1}", linha.Key, vetor[1]);
                     Console.WriteLine("================================");
                     Console.ReadKey();
-
+                    return vetor[1];
                 }
-                else
-                {
-                    Console.WriteLine("Cliente com não encontrado.");
-                }
+                
             }
-
-
+            Cabecalho(msg);
+            Console.ReadKey();
+            return msg;
         }
 
         static void ConsultarTodosClientesAtivos()
@@ -356,7 +342,7 @@
 
         static void LerArquivo()
         {
-            _cadastro.Clear();
+            //  _cadastro.Clear();
 
             if (File.Exists(_fileName))
             {
