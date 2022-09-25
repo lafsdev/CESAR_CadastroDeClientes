@@ -3,7 +3,7 @@
     internal class Program
     {
         static Dictionary<int, string> _cadastro = new Dictionary<int, string>();
-        static string _fileName = @"c:\cadastro.txt";
+        static string _fileName = @"D:\temp\csharp\cadastro.txt";
         static void Main(string[] args)
         {
             int opcao = 0;
@@ -132,10 +132,62 @@
 
         static void AlterarCliente()
         {
+            Cabecalho("Alterar cliente");
+            Console.Write("Insira o codigo do cliente que você deseja alterar:");
+            int codigo = int.Parse(Console.ReadLine());
+            bool alterou = false;
 
+            // Busca registro no dicionario, exclui registro atual e insere novo com os dados informados
+            foreach (KeyValuePair<int, string> linha in _cadastro)
+            {
+                if (linha.Key == codigo)
+                {
+                    _cadastro.Remove(codigo);
+                    Console.Write("Nome..........: ");
+                    string nome = Console.ReadLine();
+                    Console.Write("Celular.......: ");
+                    string celular = Console.ReadLine();
+                    Console.Write("e-mail........: ");
+                    string email = Console.ReadLine();
+                    Console.Write("Dta Nascimento: ");
+                    string dtaNascimento = Console.ReadLine();
+                    Console.Write("Renda Anual...: ");
+                    float rendaAnual = float.Parse(Console.ReadLine());
+                    Console.Write("Ativo.........: ");
+                    int ativo = int.Parse(Console.ReadLine());
 
+                    string linhaCadastro = $"{codigo};{nome};{celular};{email};{dtaNascimento};{rendaAnual};{ativo}";
+                    _cadastro.Add(codigo, linhaCadastro);
+
+                    alterou = true;
+                    break;
+                }
+            }
+
+            if (alterou)
+            {
+                // Recria o arquivo com o dicionario atualizado
+                File.Delete(_fileName);
+                RecarregarArquivo();
+            }
+            else
+            {
+                Console.WriteLine("Não existe cliente com este código.");
+                Console.ReadKey();
+            }
         }
-
+        static void RecarregarArquivo()
+        {
+            using (StreamWriter outputFile = new StreamWriter(_fileName))
+            {
+                foreach (KeyValuePair<int, string> linha in _cadastro)
+                {
+                    string[] campos = linha.Value.Split(";");
+                    string linhaCadastro = String.Join(";", campos);
+                    outputFile.WriteLine(linhaCadastro);
+                }
+            }
+        }
         static float InformarRendaMedia()
         {
             int rendaCount = 0;
