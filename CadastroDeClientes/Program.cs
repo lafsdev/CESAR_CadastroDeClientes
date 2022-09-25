@@ -321,7 +321,7 @@
                     Console.WriteLine("Cliente com não encontrado.");
                 }
             }
-            
+
 
         }
 
@@ -357,10 +357,21 @@
         static void LerArquivo()
         {
             _cadastro.Clear();
-            foreach (string line in System.IO.File.ReadLines(_fileName))
+
+            if (File.Exists(_fileName))
             {
-                string[] campos = line.Split(";");
-                _cadastro.Add(int.Parse(campos[0]), line);
+                foreach (string line in File.ReadLines(_fileName))
+                {
+                    string[] campos = line.Split(";");
+                    _cadastro.Add(int.Parse(campos[0]), line);
+                }
+            }
+            else
+            {
+                using (StreamWriter outputFile = File.CreateText(_fileName))
+                {
+
+                }
             }
 
         }
