@@ -141,7 +141,30 @@
             foreach (KeyValuePair<int, string> linha in _cadastro)
             {
                 if (linha.Key == codigo)
+                    
                 {
+                    string[] campos = linha.Value.Split(";");
+                    Console.WriteLine();
+                   
+                    Console.WriteLine("Dados antigos salvos: ");
+                    Console.Write("Nome..........: "); 
+                    Console.WriteLine(campos[1]);
+                    Console.Write("Celular.......: ");
+                    Console.WriteLine(campos[2]);
+                    Console.Write("e-mail........: "); 
+                    Console.WriteLine(campos[3]);
+                    Console.Write("Dta Nascimento: ");
+                    Console.WriteLine(campos[4]);
+                    Console.Write("Renda Anual...: ");
+                    Console.WriteLine(campos[5]);
+                    Console.Write("Ativo.........: ");
+                    Console.WriteLine(campos[6]);
+
+                    Console.WriteLine();
+                    Console.WriteLine();
+                    
+                    
+                     Console.WriteLine("Insira os novos dados a serem cadastrados abaixo:");
                     _cadastro.Remove(codigo);
                     Console.Write("Nome..........: ");
                     string nome = Console.ReadLine();
