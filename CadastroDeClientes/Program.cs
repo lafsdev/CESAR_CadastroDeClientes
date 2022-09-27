@@ -3,7 +3,7 @@
     internal class Program
     {
         static Dictionary<int, string> _cadastro = new Dictionary<int, string>();
-        static string _fileName = @"D:\temp\csharp\cadastro.txt";
+        static string _fileName = @"C:\Users\aleaz\OneDrive\Documentos\cadastro.txt";
         static void Main(string[] args)
         {
             int opcao = 0;
@@ -141,17 +141,17 @@
             foreach (KeyValuePair<int, string> linha in _cadastro)
             {
                 if (linha.Key == codigo)
-                    
+
                 {
                     string[] campos = linha.Value.Split(";");
                     Console.WriteLine();
-                   
+
                     Console.WriteLine("Dados antigos salvos: ");
-                    Console.Write("Nome..........: "); 
+                    Console.Write("Nome..........: ");
                     Console.WriteLine(campos[1]);
                     Console.Write("Celular.......: ");
                     Console.WriteLine(campos[2]);
-                    Console.Write("e-mail........: "); 
+                    Console.Write("e-mail........: ");
                     Console.WriteLine(campos[3]);
                     Console.Write("Dta Nascimento: ");
                     Console.WriteLine(campos[4]);
@@ -162,9 +162,9 @@
 
                     Console.WriteLine();
                     Console.WriteLine();
-                    
-                    
-                     Console.WriteLine("Insira os novos dados a serem cadastrados abaixo:");
+
+
+                    Console.WriteLine("Insira os novos dados a serem cadastrados abaixo:");
                     _cadastro.Remove(codigo);
                     Console.Write("Nome..........: ");
                     string nome = Console.ReadLine();
@@ -327,7 +327,7 @@
                     Console.ReadKey();
                     return vetor[1];
                 }
-                
+
             }
             Cabecalho(msg);
             Console.ReadKey();
@@ -365,14 +365,15 @@
 
         static void LerArquivo()
         {
-            //  _cadastro.Clear();
-
             if (File.Exists(_fileName))
             {
                 foreach (string line in File.ReadLines(_fileName))
                 {
-                    string[] campos = line.Split(";");
-                    _cadastro.Add(int.Parse(campos[0]), line);
+                    if (line != "")
+                    {
+                        string[] campos = line.Split(";");
+                        _cadastro.Add(int.Parse(campos[0]), line);
+                    }
                 }
             }
             else
@@ -382,7 +383,6 @@
 
                 }
             }
-
         }
 
         static void InformarAniversarios()
@@ -402,9 +402,6 @@
                 }
             }
             Console.ReadKey();
-
-
-
         }
 
         static int ObterNovoCodigoCliente()
