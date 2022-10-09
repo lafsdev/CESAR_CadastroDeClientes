@@ -8,7 +8,7 @@
 - [@aleazevedo84](https://github.com/aleazevedo84)
 - [@juanmmartins](https://github.com/juanmmartins)
 - [@lafsdev](https://github.com/lafsdev)
-- [@MarcosJr77](https://github.com/MarcosJr77)
+- Alberto
 
 
 ## Documentação 
